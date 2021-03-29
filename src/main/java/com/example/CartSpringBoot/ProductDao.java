@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 @Repository
 public class ProductDao {
 
-    private static final String filePath = "C:\\Users\\srika\\Desktop\\spring\\CartSpringBoot\\src\\products.txt";
+    private static final File f = new File(System.getProperty("user.dir")+"/src/products.txt");
 
     private List<Product> products;
 
@@ -21,7 +22,7 @@ public class ProductDao {
     public ProductDao(String filePath) throws Exception {
         products = new ArrayList<>();
 
-        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        BufferedReader reader = new BufferedReader(new FileReader(f));
         String line;
 
         while((line = reader.readLine())!=null){
@@ -39,7 +40,7 @@ public class ProductDao {
 
     @Autowired
     public ProductDao() throws Exception {
-        this(filePath);
+        this(f.getPath());
     }
 
     public List<Product> getProducts() {
